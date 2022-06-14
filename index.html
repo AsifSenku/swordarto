@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+
+<head>
+    <title>Asif</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" crossorigin="anonymous">
+    <script type="text/javascript" src="js/index.js"></script>
+    <script type="text/javascript" src="js/main_animation.js"></script>
+</head>
+<body>
+    <div id="animations">
+        <div id="main_body" class="body_class">
+            <img src="https://i.ibb.co/X86Hk3m/images-9-1.jpg" alt="Profile pic">
+            <h1 style="font-family: 'Roboto', sans-serif; font-style: initial;">Asif</h1>
+            <h2 class="desc" style="font-weight: 10; font-size: 20px;">
+                I'm a
+                <span class="text-switcher" style="font-style: initial; font-size: 22px;" data-hold-time="1000" data-switch-content='[ "Web Developer", "Python programmer","C++ programmer."]'></span>
+            </h2>
+            <hr style="width: 50%; background-color: #1D2951; border-color: #1D2951;">
+            <a href=" " style="color: white;"><i class="fab fa-instagram" style="font-size: 2em;"></i></a> &nbsp 
+            <a href="https://github.com/AsifSenku/" style="color: white;"><i class="fab fa-github" style="font-size: 2em;"></i></a> &nbsp
+
+        </div>
+    </div>
+    <div class="bg">
+      
+    </div>
+</body>
+<style>
+  @import url('https://fonts.googleapis.com/css?family=Roboto');
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+body {
+    background-image: url('https://i.ibb.co/PxP4GGV/e377461761c8ab33fbb713ada400984a.gif');
+    font-family: 'Montserrat', sans-serif;
+    color: #fff;
+    line-height: 1.3;
+    -webkit-font-smoothing: antialiased;
+}
+
+#animations {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+#main_body {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    padding: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.body_class img {
+    width: 10vw;
+    border-radius: 50%;
+}
+
+.body_class a {
+    font-size: 1.3rem;
+    padding: 10px;
+}
+
+.body_class a:hover {
+    font-size: 1.2rem;
+    color: white;
+    cursor: pointer;
+    transition: 0.4s;
+}
+
+@media screen and (max-width: 768px) {
+    .body_class img {
+        width: 30%;
+        border-radius: 50%;
+    }
+    .body_class a {
+        font-size: 1.3rem;
+        padding: 0px;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    .body_class img {
+        width: 25%;
+        border-radius: 50%;
+    }
+    .body_class a {
+        font-size: 1.3rem;
+        padding: 4px;
+    }
+}
+</style>
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    particleground(document.getElementById('animations'), {
+        dotColor: '#5cbdaa',
+        lineColor: '#5cbdaa'
+    });
+    var intro = document.getElementById('main_body');
+    intro.style.marginTop = -intro.offsetHeight / 2 + 'px';
+}, false);
+
+/* JS code used for text switcher */
+var textSwitcher = function(el, toRotate, period) {
+    this.toRotate = toRotate;
+    this.el = el;
+    this.loopNum = 0;
+    this.period = parseInt(period, 10) || 2000;
+    this.txt = "";
+    this.tick();
+    this.isDeleting = false;
+};
+
+textSwitcher.prototype.tick = function() {
+    var i = this.loopNum % this.toRotate.length;
+    var fullTxt = this.toRotate[i];
+
+    if (this.isDeleting) {
+        this.txt = fullTxt.substring(0, this.txt.length - 1);
+    } else {
+        this.txt = fullTxt.substring(0, this.txt.length + 1);
+    }
+
+    this.el.innerHTML = '<span class="wrap">' + this.txt + "</span>";
+
+    var that = this;
+    var delta = 200 - Math.random() * 100;
+
+    if (this.isDeleting) {
+        delta /= 2;
+    }
+if (!this.isDeleting && this.txt === fullTxt) {
+        delta = this.period;
+        this.isDeleting = true;
+    } else if (this.isDeleting && this.txt === "") {
+        this.isDeleting = false;
+        this.loopNum++;
+        delta = 500;
+    }
+
+    setTimeout(function() {
+        that.tick();
+    }, delta);
+};
+
+window.onload = function() {
+    var elements = document.getElementsByClassName("text-switcher");
+    for (var i = 0; i < elements.length; i++) {
+        var toRotate = elements[i].getAttribute("data-switch-content");
+        var period = elements[i].getAttribute("data-hold-time");
+        if (toRotate) {
+            new textSwitcher(elements[i], JSON.parse(toRotate), period);
+        }
+    }
+    // INJECT CSS
+    var css = document.createElement("style");
+    css.type = "text/css";
+    css.innerHTML = ".text-switcher > .wrap { border-right: 0.08em solid #666 }";
+    document.body.appendChild(css);
+};
+</script>
+</html>
